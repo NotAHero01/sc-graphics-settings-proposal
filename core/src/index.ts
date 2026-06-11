@@ -26,3 +26,17 @@ export type {
 
 // Domain model — catalogue
 export { GRAPHICS_CATALOGUE, listSettings, getSetting } from './model/catalogue';
+
+// Analysis layer — types
+export type {
+  ProbableBottleneck,
+  AnalysisTarget,
+  Symptom,
+  PlayerContext,
+} from './analysis/player-context';
+export type { RelevanceLevel, AnalysisResult } from './analysis/analysis-result';
+export type { RelevanceAssessment } from './analysis/relevance';
+
+// Analysis layer — functions
+export { analyseSettings } from './analysis/analyse-settings';
+export { assessRelevance } from './analysis/relevance';

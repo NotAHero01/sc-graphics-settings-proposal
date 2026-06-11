@@ -1,0 +1,5 @@
+# The repository root is the app package (Vite/React).
+# The core logic lives in its own package so the UI can depend on it,
+# but the core can never depend on the UI.
+packages:
+  - 'core'

@@ -3,3 +3,5 @@
 # but the core can never depend on the UI.
 packages:
   - 'core'
+allowBuilds:
+  esbuild: false

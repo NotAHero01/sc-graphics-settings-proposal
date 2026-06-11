@@ -40,3 +40,29 @@ export type { RelevanceAssessment } from './analysis/relevance';
 // Analysis layer — functions
 export { analyseSettings } from './analysis/analyse-settings';
 export { assessRelevance } from './analysis/relevance';
+
+// Tracking — types
+export type { SettingValue, SettingChange } from './tracking/setting-change';
+export type {
+  ChangeSession,
+  NewChangeSession,
+  SettingChangeInput,
+} from './tracking/change-session';
+
+// Tracking — functions
+export { createChangeSession, addSettingChange } from './tracking/change-session';
+
+// Verification — types
+export type {
+  VerificationOutcome,
+  VerificationObservation,
+} from './verification/verification-outcome';
+export type {
+  AttributionStrength,
+  VerificationSummary,
+} from './verification/verification-summary';
+export type { VerificationLink } from './verification/verification-link';
+
+// Verification — functions
+export { summariseVerification } from './verification/verification-summary';
+export { linkAnalysisToVerification } from './verification/verification-link';

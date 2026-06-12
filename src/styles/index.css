@@ -1,3 +1,124 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+ * Layout tokens and structural rules for the settings wireframe.
+ * See docs/decisions/0008-layout-safe-area-responsive.md.
+ * These are structure only — no final colours, decoration, or motion.
+ */
+:root {
+  /* Centred surface */
+  --surface-max-width: 2080px;
+  --surface-max-width-ultrawide: 2240px; /* absolute ceiling, not currently applied */
+  --safe-area-min: 20px;
+  --breakpoint-margin: 24px;
+
+  /* Bounded bar heights: small / base / max */
+  --nav-height: 64px;
+  --subnav-height: 50px;
+  --footer-height: 66px;
+
+  /* Two-column main grid */
+  --col-left-min: 620px;
+  --col-right-min: 420px;
+
+  /* Structural divider colour (matches neutral-800). */
+  --divider-color: #262626;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --nav-height: 56px;
+    --subnav-height: 48px;
+    --footer-height: 64px;
+  }
+}
+
+/* Outer page: holds the centred surface; never scrolls itself. */
+.app-root {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* The centred application surface, bounded and safe-area aware. */
+.app-surface {
+  width: 100%;
+  max-width: var(--surface-max-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: max(var(--breakpoint-margin), env(safe-area-inset-left), var(--safe-area-min));
+  padding-right: max(var(--breakpoint-margin), env(safe-area-inset-right), var(--safe-area-min));
+}
+
+.app-nav {
+  height: var(--nav-height);
+  flex-shrink: 0;
+}
+
+.app-subnav {
+  height: var(--subnav-height);
+  flex-shrink: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.app-footer {
+  height: var(--footer-height);
+  flex-shrink: 0;
+  /* Respect the bottom safe area on devices that have one. */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Body fills remaining height; scrolling happens inside the columns. */
+.app-body {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: minmax(var(--col-left-min), 1.35fr) minmax(var(--col-right-min), 1fr);
+  height: 100%;
+  min-height: 0;
+}
+
+.main-col {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/*
+ * The divider between the two columns is a right border in two-column mode.
+ * In stacked mode the columns sit vertically, so a right border would read as a
+ * wrong-side edge — switch it to a bottom border instead.
+ */
+.main-col--left {
+  border-right: 1px solid var(--divider-color);
+}
+
+/*
+ * Stacked mode: when the two columns can no longer fit at their minimum widths,
+ * stack list above detail and let the body scroll. No collapsible panels.
+ */
+@media (max-width: 1099px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .main-col {
+    overflow-y: visible;
+  }
+  .main-col--left {
+    border-right: 0;
+    border-bottom: 1px solid var(--divider-color);
+  }
+  .app-body {
+    overflow-y: auto;
+  }
+}

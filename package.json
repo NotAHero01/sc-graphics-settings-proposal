@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm --filter @scgs/core test",
+    "validate": "pnpm --filter @scgs/core exec tsc --noEmit && pnpm exec tsc --noEmit && pnpm --filter @scgs/core test && pnpm run build"
   },
   "dependencies": {
     "@scgs/core": "workspace:*",

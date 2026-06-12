@@ -1,10 +1,11 @@
 {
+  // The core is consumed as TypeScript source (see the package "exports"), so it
+  // is type-checked, not emitted. This config covers both src and tests with no
+  // emit; all strictness comes from the shared base config.
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "lib": ["ES2022"],
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "declaration": true
+    "noEmit": true
   },
   "include": ["src", "tests"]
 }
